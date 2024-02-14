@@ -1,4 +1,4 @@
-dataset: https://github.com/niyazmnazari/DSIBuildingSoftware/blob/main/dataset.csv
+dataset: https://raw.githubusercontent.com/niyazmnazari/DSIBuildingSoftware/main/dataset.csv
 
 plot_config:
   title: Building Score Depend On Building Year

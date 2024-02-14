@@ -22,9 +22,9 @@ with open('userconfig.yml', 'r') as yamlfile:
 dr = pd.read_csv(config['dataset'])
 
 fig , ax = plt.subplots()
-ax.set_title(config['title'])
-ax.set_xlabel(config['xlabel'])
-ax.set_ylabel(config['ylabel'])
+ax.set_title(config['plot_config']['title'])
+ax.set_xlabel(config['plot_config']['xlabel'])
+ax.set_ylabel(config['plot_config']['ylabel'])
 ax.set_axisbelow(True)           
 ax.grid(alpha = 0.7 )
 
