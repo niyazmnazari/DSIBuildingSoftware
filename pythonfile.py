@@ -5,12 +5,21 @@ import argparse
 import yaml
 import logging
 
+#Refactoring 
+def LoadData(filepath):
+    try:
+        return pd.read_csv(filepath)
+        logging.info(f'Successfully loaded {filepath}')
+    except Exception as e:
+        logging.error('Error loading dataset', exc_info=e)
+        raise e.add_note('Please enter a valid dataset path.')
+    
 #Parser Argument
 parser = argparse.ArgumentParser(description='Building Score upon Building Year')
-parser.add_argument('--fcolor', '-f' , type=str, help='Plot Fore Color')
-parser.add_argument('--ecolor', '-e' , type=str, help='Plot Edge Color')
-parser.add_argument('--outputfile', '-o', type=str, help='Output plot filename')
-parser.add_argument('--verbose', '-v', action='store_true')
+parser.add_argument('--fcolor', '-f' , type=str, help='Plot Fore Color' ,default='red')
+parser.add_argument('--ecolor', '-e' , type=str, help='Plot Edge Color',default='k')
+parser.add_argument('--outputfile', '-o', type=str, help='Output plot filename',default='plot.png')
+parser.add_argument('--verbose', '-v', action='store_true',default='')
 args = parser.parse_args()
 
 #Define lo file to keep errors and warnings
@@ -34,12 +43,7 @@ with open('userconfig.yml', 'r') as yamlfile:
         
 
 dataset_url = config['dataset']
-try:
-    dr = pd.read_csv(dataset_url)
-    logging.info(f'Successfully loaded {dataset_url}')
-except Exception as e:
-    logging.error('Error loading dataset', exc_info=e)
-    raise e.add_note('Please enter a valid dataset path.')
+dr = LoadData(dataset_url)
 
 
 fig , ax = plt.subplots()
@@ -49,6 +53,6 @@ ax.set_ylabel(config['plot_config']['ylabel'])
 ax.set_axisbelow(True)           
 ax.grid(alpha = 0.7 )
 
-plt.scatter(dr['YEAR BUILT'] , dr['CURRENT BUILDING EVAL SCORE'] , marker='s' , facecolor=args.fcolor , edgecolors=args.ecolor)
+plt.scatter(dr['YEAR BUILT'] , dr['CURRENT BUILDING EVAL SCORE'] , marker='s' , facecolor='red' , edgecolors='k')
 
 plt.savefig(args.outputfile)
